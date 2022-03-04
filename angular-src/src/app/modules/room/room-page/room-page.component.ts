@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
 import {SocketServices} from "../../../shared/services/socket.services";
 import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
@@ -10,12 +10,14 @@ import {Subscriber} from "rxjs";
 })
 export class RoomPageComponent implements OnInit, OnDestroy {
 
-  public roomId: string | null= "";
+  public roomId: string | null = "";
 
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
   public user = {nickname: "nickname", selected: "XXL"}
+
+  public hidden: boolean = true;
 
   public socketSubscriptions = new Subscriber();
 
@@ -50,5 +52,9 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public submitOption(cardOption: string) {
     this.socketServices.sendData(cardOption)
+  }
+
+  public revealCards() {
+    this.hidden = !this.hidden;
   }
 }

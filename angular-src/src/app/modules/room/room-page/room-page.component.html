@@ -10,21 +10,21 @@
         <div class="d-flex flex-row" style="height: 100%;">
           <div class="poker-table-container">
             <div class="poker-table-top">
-              <user-card [User]="user"></user-card>
+              <user-card [User]="user" [Hidden]="hidden"></user-card>
             </div>
             <div class="poker-table-left">
-              <user-card [User]="user"></user-card>
+              <user-card [User]="user" [Hidden]="hidden"></user-card>
             </div>
 
             <div class="poker-table">
-              <button class="btn btn-primary">Reveal cards</button>
+              <button class="btn btn-primary" (click)="revealCards()">Reveal cards</button>
             </div>
 
             <div class="poker-table-right">
-              <user-card [User]="user"></user-card>
+              <user-card [User]="user" [Hidden]="hidden"></user-card>
             </div>
             <div class="poker-table-bottom">
-              <user-card [User]="user"></user-card>
+              <user-card [User]="user" [Hidden]="hidden"></user-card>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'user-card',
@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class UserCardComponent implements OnInit {
 
   @Input() public User: any;
+  @Input() public Hidden: any;
 
   constructor() { }
 
