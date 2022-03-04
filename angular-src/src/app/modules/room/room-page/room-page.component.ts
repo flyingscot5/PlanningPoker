@@ -38,7 +38,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     this.socketServices.sendJoinRoom(this.roomId);
 
     this.socketSubscriptions.add(this.socketServices.getNewClient().subscribe((data: any) => {
-      this.users.set(data.socketId, {});
+      this.users.set(data.socketId, {nickname: "nickname"});
     }));
 
     this.socketSubscriptions.add(this.socketServices.getData().subscribe((data: any) => {
