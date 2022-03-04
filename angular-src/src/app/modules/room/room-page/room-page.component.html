@@ -4,29 +4,32 @@
       <span>Cool Poker Game</span>
     </div>
     <div class="d-flex flex-row" style="height: 100%;">
-      <div class="d-flex flex-column" style="width: 100%">
-        <div class="poker-table-container">
+      <div class="d-flex flex-column" style="width: 100%;height: 100%">
+        <div class="d-flex flex-row" style="height: 100%;">
+          <div class="poker-table-container">
+            <div class="poker-table-top">
+              <user-card [User]="user"></user-card>
+            </div>
+            <div class="poker-table-left">
+              <user-card [User]="user"></user-card>
+            </div>
 
-          <div class="poker-table-top">
-            <user-card [User]="user"></user-card>
-          </div>
-          <div class="poker-table-left">
-            <user-card [User]="user"></user-card>
-          </div>
+            <div class="poker-table">
+              <button class="btn btn-primary">Reveal cards</button>
+            </div>
 
-          <div class="poker-table">
-            <button class="btn btn-primary">Reveal cards</button>
-          </div>
-
-          <div class="poker-table-right">
-            <user-card [User]="user"></user-card>
-          </div>
-          <div class="poker-table-bottom">
-            <user-card [User]="user"></user-card>
+            <div class="poker-table-right">
+              <user-card [User]="user"></user-card>
+            </div>
+            <div class="poker-table-bottom">
+              <user-card [User]="user"></user-card>
+            </div>
           </div>
         </div>
-        <div class="card-options-container">
-          <card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption" (click)="submitOption(cardOption)"></card>
+        <div class="d-flex flex-row align-items-end">
+          <div class="card-options-container">
+            <card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption" (click)="submitOption(cardOption)"></card>
+          </div>
         </div>
       </div>
     </div>
