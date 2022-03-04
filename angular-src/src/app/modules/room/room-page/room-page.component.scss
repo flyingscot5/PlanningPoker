@@ -1,0 +1,54 @@
+
+.poker-table-container {
+  grid-gap: 0.8rem;
+  display: inline-grid;
+  grid-template-areas:
+        "left top right"
+        "left table right"
+        "left bottom right";
+  grid-template-columns: 10.4rem 1fr 10.4rem;
+  grid-template-rows: auto 1fr auto;
+  margin: 0 auto;
+  min-height: 200px;
+  width: auto;
+}
+
+.poker-table-top {
+  align-items: stretch;
+  grid-area: top;
+  padding-bottom: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.poker-table-left {
+  grid-area: left;
+  flex-direction: column-reverse;
+  padding: 8rem 0;
+}
+
+.poker-table-right {
+  grid-area: right;
+  flex-direction: column-reverse;
+  padding: 8rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.poker-table-bottom {
+  align-items: stretch;
+  grid-area: bottom;
+  padding: 1.2rem 0 0.4rem;
+}
+
+.poker-table {
+  background-color: lightblue;
+  min-height: 15.1rem;
+  min-width: 33.8rem;
+  border-radius: 2.8rem;
+  padding: 0 1.6rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
