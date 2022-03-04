@@ -12,7 +12,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public roomId: string | null= "";
 
-  public options: Array<string> = [];
+  public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
 
   public socketSubscriptions = new Subscriber();
 
