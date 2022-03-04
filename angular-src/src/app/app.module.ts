@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {HomeModule} from "./modules/home/home.module";
 
-const config: SocketIoConfig = {url: 'https://light-bot.net:8080/'};
+const config: SocketIoConfig = {url: 'http://localhost:8080/'};
 
 @NgModule({
   declarations: [
