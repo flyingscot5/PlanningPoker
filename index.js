@@ -41,10 +41,10 @@ io.on('connection', socket => {
         socket.join(data.roomId);
     });
 
-    socket.on('signalData', (data) => {
+    socket.on('data', (data) => {
         console.log(`offer to ${data.socketId} from ${socket.id}`);
         data.from = socket.id;
-        io.to(data.socketId).emit('signalData', data);
+        io.to(data.socketId).emit('data', data);
     });
 });
 

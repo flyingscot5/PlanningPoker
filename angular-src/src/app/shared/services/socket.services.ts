@@ -53,10 +53,10 @@ export class SocketServices {
     this.socket.emit('signalData', {socketId, signalData});
   }
 
-  public getSignalData(): any {
-    return this.socket.fromEvent('signalData').pipe(
+  public getData(): any {
+    return this.socket.fromEvent('data').pipe(
       map(data => {
-        console.log('received signalData', data);
+        console.log('received Data', data);
         return data;
       })
     );
