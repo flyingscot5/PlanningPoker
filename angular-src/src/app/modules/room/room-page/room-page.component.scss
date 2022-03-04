@@ -58,12 +58,17 @@
   margin: 0 auto;
   display: flex;
   float: bottom;
-  //bottom: 0;
   background-color: #f9f9f9;
   justify-content: center;
-  //position: absolute;
   width: 100%;
   height: 20%;
+}
+
+#jobsbar ul{
+  padding: 1rem;
+}
+#jobsbar ul li{
+  display: block;
 }
 
 

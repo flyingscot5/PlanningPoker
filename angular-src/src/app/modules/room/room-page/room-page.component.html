@@ -3,20 +3,25 @@
     <span>Cool Poker Game</span>
   </div>
   <div class="d-flex flex-row" style="height: 100%;">
-    <div class="poker-table-container">
+    <div class="d-flex flex-column" style="width: 100%">
+      <div class="poker-table-container">
 
-      <div class="poker-table-top"></div>
-      <div class="poker-table-left"></div>
+        <div class="poker-table-top"></div>
+        <div class="poker-table-left"></div>
 
-      <div class="poker-table">
-        <button class="btn btn-primary">Reveal cards</button>
+        <div class="poker-table">
+          <button class="btn btn-primary">Reveal cards</button>
+        </div>
+
+        <div class="poker-table-right"></div>
+        <div class="poker-table-bottom"></div>
       </div>
-
-      <div class="poker-table-right"></div>
-      <div class="poker-table-bottom"></div>
+      <div class="card-options-container">
+        <app-card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption"></app-card>
+      </div>
     </div>
     <div style="background: #f9f9f9;">
-      <div style="margin: 2rem;">
+      <div id="jobsbar" style="margin: 2rem;">
         <div>
           <h3>Jobs to Quote</h3>
         </div>
@@ -36,9 +41,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="card-options-container">
-    <app-card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption"></app-card>
   </div>
 </div>
 
