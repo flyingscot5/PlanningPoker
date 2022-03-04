@@ -15,6 +15,8 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
+  public user = {nickname: "nickname", selected: "XXL"}
+
   public socketSubscriptions = new Subscriber();
 
   private socketServices: SocketServices;
