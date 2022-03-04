@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 
 import {SharedModule} from "./shared/shared.module";
 import {HomeModule} from "./modules/home/home.module";
+import {RoomModule} from "./modules/room/room.module";
 
 const config: SocketIoConfig = {url: 'http://localhost:8080/'};
 
@@ -20,6 +21,7 @@ const config: SocketIoConfig = {url: 'http://localhost:8080/'};
     AppRoutingModule,
     SharedModule,
     HomeModule,
+    RoomModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [],
