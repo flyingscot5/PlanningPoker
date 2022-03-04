@@ -1,7 +1,8 @@
-import {Component, HostListener, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SocketServices} from "../../../shared/services/socket.services";
 import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
+import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
 
 @Component({
   selector: 'app-room-page',
@@ -9,6 +10,8 @@ import {Subscriber} from "rxjs";
   styleUrls: ['./room-page.component.scss']
 })
 export class RoomPageComponent implements OnInit, OnDestroy {
+
+  @ViewChild(TaskQueuePanelComponent) TaskQueuePanelComponent: any;
 
   public roomId: string | null = "";
 
@@ -51,7 +54,11 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   }
 
   public submitOption(cardOption: string) {
-    this.socketServices.sendData(cardOption)
+    this.socketServices.sendData(cardOption);
+  }
+
+  public toggleTaskPanel(){
+    this.TaskQueuePanelComponent.toggleNavbar();
   }
 
   public revealCards() {

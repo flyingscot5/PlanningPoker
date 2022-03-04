@@ -13,7 +13,7 @@ export class TaskQueuePanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggleNavbar() {
+  public toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
 }
