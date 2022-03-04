@@ -42,9 +42,7 @@ io.on('connection', socket => {
     });
 
     socket.on('data', (data) => {
-        console.log(`offer to ${data.socketId} from ${socket.id}`);
-        data.from = socket.id;
-        io.to(data.socketId).emit('data', data);
+        socket.in(data.roomId).emit('data', {data: data});
     });
 });
 
