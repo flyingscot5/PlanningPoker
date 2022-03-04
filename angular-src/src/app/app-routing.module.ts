@@ -5,7 +5,7 @@ import {HomePageComponent} from "./shared/modules/home/home-page/home-page.compo
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
-  {path: 'room/:RoomId'},
+  // {path: 'room/:RoomId'},
   {path: '**', component: HomePageComponent}
 ];
 

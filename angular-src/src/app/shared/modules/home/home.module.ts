@@ -8,6 +8,9 @@ import { HomePageComponent } from './home-page/home-page.component';
   declarations: [
     HomePageComponent
   ],
+  exports: [
+    HomePageComponent
+  ],
   imports: [
     CommonModule
   ]
