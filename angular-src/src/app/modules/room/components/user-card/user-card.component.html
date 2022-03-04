@@ -1,4 +1,8 @@
 <div class="d-flex flex-column">
-  <card [CardOption]="User.selected"></card>
+  <div class="option-card card">
+    <div class="card-body">
+      <p class="card-text">{{User.selected}}</p>
+    </div>
+  </div>
   <p>{{User.nickname}}</p>
 </div>
