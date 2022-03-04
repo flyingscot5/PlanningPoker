@@ -7,6 +7,7 @@ import {map} from 'rxjs/operators';
 })
 
 export class SocketServices {
+  private roomId: any;
 
   public constructor(private socket: Socket) {
   }
@@ -22,6 +23,7 @@ export class SocketServices {
 
   public sendJoinRoom(roomId: any): void {
     console.log(`Joining room: ${roomId}`);
+    this.roomId = roomId;
     this.socket.emit('joinRoom', {roomId});
   }
 
@@ -48,9 +50,9 @@ export class SocketServices {
     );
   }
 
-  public sendSignalData(socketId: any, signalData: any): void {
-    console.log('sending signalData', socketId, signalData);
-    this.socket.emit('signalData', {socketId, signalData});
+  public sendData(data: any): void {
+    console.log('sending Data', {data});
+    this.socket.emit('data', {roomId: this.roomId, data});
   }
 
   public getData(): any {

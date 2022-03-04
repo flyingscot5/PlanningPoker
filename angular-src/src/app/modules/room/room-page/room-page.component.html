@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="card-options-container">
-    <app-card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption"></app-card>
+    <app-card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption" (click)="submitOption(cardOption)"></app-card>
   </div>
 </div>
 

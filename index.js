@@ -32,6 +32,7 @@ io.on('connection', socket => {
     });
 
     socket.on('joinRoom', (data) => {
+        console.log("join room", data);
         socket.to(data.roomId).emit('newClient', {socketId: socket.id});
 
         getRoomUsers(data.roomId, function (clients) {
@@ -42,7 +43,9 @@ io.on('connection', socket => {
     });
 
     socket.on('data', (data) => {
-        socket.in(data.roomId).emit('data', {data: data});
+        console.log("send data", data);
+        data.from = socket.id;
+        socket.to(data.roomId).emit('data', {data: data});
     });
 });
 

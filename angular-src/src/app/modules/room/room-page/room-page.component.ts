@@ -13,6 +13,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   public roomId: string | null= "";
 
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
+  public users = new Map();
 
   public socketSubscriptions = new Subscriber();
 
@@ -29,14 +30,23 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     this.socketSubscriptions.unsubscribe();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.roomId = params.get('RoomId');
     });
 
     this.socketServices.sendJoinRoom(this.roomId);
+
+    this.socketSubscriptions.add(this.socketServices.getNewClient().subscribe((data: any) => {
+      this.users.set(data.socketId, {});
+    }));
+
+    this.socketSubscriptions.add(this.socketServices.getData().subscribe((data: any) => {
+      this.users.set(data.from, {selected: data.data});
+    }));
   }
 
-
-
+  public submitOption(cardOption: string) {
+    this.socketServices.sendData(cardOption)
+  }
 }
