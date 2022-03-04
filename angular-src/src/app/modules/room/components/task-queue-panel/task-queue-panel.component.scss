@@ -1,0 +1,26 @@
+#jobsbar{
+  width: 15rem;
+  max-width: 20rem;
+}
+
+#jobsbar ul{
+  padding: 1rem;
+  margin: 0;
+}
+#jobsbar ul li{
+  display: block;
+  padding-bottom: 1rem;
+}
+
+#jobsbar.collapsed{
+  margin: 0;
+  width: 1rem;
+}
+
+#jobsbar.collapsed #activeitem{
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
+

@@ -1,0 +1,36 @@
+<div id="jobsbar" [ngClass]="navbarOpen ? 'collapsed': ''">
+  <div>
+    <h3>Jobs to Quote</h3>
+  </div>
+  <div>
+    <ul id="activeitem">
+      <li>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              job title 1
+            </h5>
+            <hr style="width: 100%;">
+            <p class="card-text">
+              job info 1
+            </p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              job title 2
+            </h5>
+            <hr style="width: 100%;">
+            <p class="card-text">
+              job info 2
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<button (click)="toggleNavbar()">LOLOLOL</button>
