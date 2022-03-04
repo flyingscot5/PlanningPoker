@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {SharedModule} from "./shared/shared.module";
-import {HomeModule} from "./shared/modules/home/home.module";
+import {HomeModule} from "./modules/home/home.module";
 
 const config: SocketIoConfig = {url: 'https://light-bot.net:8080/'};
 
