@@ -6,15 +6,23 @@
     <div class="d-flex flex-column" style="width: 100%">
       <div class="poker-table-container">
 
-        <div class="poker-table-top"></div>
-        <div class="poker-table-left"></div>
+        <div class="poker-table-top">
+          <app-card [CardOption]="'XXL'"></app-card>
+        </div>
+        <div class="poker-table-left">
+          <app-card [CardOption]="'XXL'"></app-card>
+        </div>
 
         <div class="poker-table">
           <button class="btn btn-primary">Reveal cards</button>
         </div>
 
-        <div class="poker-table-right"></div>
-        <div class="poker-table-bottom"></div>
+        <div class="poker-table-right">
+          <app-card [CardOption]="'XXL'"></app-card>
+        </div>
+        <div class="poker-table-bottom">
+          <app-card [CardOption]="'XXL'"></app-card>
+        </div>
       </div>
       <div class="card-options-container">
         <app-card *ngFor="let cardOption of cardOptions" [CardOption]="cardOption" (click)="submitOption(cardOption)"></app-card>
