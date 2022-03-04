@@ -25,6 +25,8 @@
   grid-area: left;
   flex-direction: column-reverse;
   padding: 8rem 0;
+  display: flex;
+  justify-content: center;
 }
 
 .poker-table-right {
@@ -39,6 +41,8 @@
   align-items: stretch;
   grid-area: bottom;
   padding: 1.2rem 0 0.4rem;
+  display: flex;
+  justify-content: center;
 }
 
 .poker-table {
