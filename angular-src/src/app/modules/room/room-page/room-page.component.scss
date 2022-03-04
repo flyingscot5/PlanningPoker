@@ -64,11 +64,18 @@
   height: 20%;
 }
 
+#jobsbar{
+  width: 15rem;
+  max-width: 20rem;
+}
+
 #jobsbar ul{
   padding: 1rem;
+  margin: 0;
 }
 #jobsbar ul li{
   display: block;
+  padding-bottom: 1rem;
 }
 
 
