@@ -1,11 +1,16 @@
 const config = require('./config.json');
-const https = require('https');
+const http = require('http');
 
-const server = https.createServer({}).listen(config.ports.socket, () => {
+const server = http.createServer({}).listen(config.ports.socket, () => {
     console.log(`Server has started on Port: ${config.ports.socket}`);
 });
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 io.on('connection', socket => {
 
@@ -16,9 +21,7 @@ io.on('connection', socket => {
     });
 
     function getRoomUsers(roomId, fn) {
-        io.in(roomId).clients((error, clients) => {
-            fn(clients);
-        });
+        fn(io.sockets.adapter.rooms.get(roomId));
     }
 
     socket.on('leaveRoom', (data) => {

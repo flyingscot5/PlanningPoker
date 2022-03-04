@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RoomPageComponent } from './room-page/room-page.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RoomPageComponent} from './room-page/room-page.component';
 
 
 @NgModule({
