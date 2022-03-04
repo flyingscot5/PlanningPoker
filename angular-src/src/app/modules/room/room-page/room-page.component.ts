@@ -12,6 +12,8 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public roomId: string | null= "";
 
+  public options: Array<string> = [];
+
   public socketSubscriptions = new Subscriber();
 
   private socketServices: SocketServices;
@@ -34,6 +36,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this.socketServices.sendJoinRoom(this.roomId);
   }
+
 
 
 }
