@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
 import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
 import {ActionType} from "../../../shared/services/types/action-type";
+import {ActionEvent} from "../../../shared/services/types/action-event";
 
 @Component({
   selector: 'app-room-page',
@@ -49,21 +50,36 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       this.users.set(data.socketId, {nickname: "nickname"});
     }));
 
-    this.socketSubscriptions.add(this.socketServices.getAction().subscribe((action: any) => {
-      this.users.set(action.from, {selected: action.action});
-    }));
+    this.eventActions();
   }
 
   public submitOption(cardOption: string) {
-    this.socketServices.sendAction({action: ActionType.SelectOption, data: cardOption});
+    this.socketServices.sendAction({type: ActionType.SelectOption, data: cardOption});
   }
 
-  public toggleTaskPanel(){
+  public toggleTaskPanel() {
     this.TaskQueuePanelComponent.toggleNavbar();
   }
 
   public revealCards() {
     this.hidden = !this.hidden;
-    this.socketServices.sendAction({action: ActionType.RevealCards, data: this.hidden});
+    this.socketServices.sendAction({type: ActionType.RevealCards, data: this.hidden});
+  }
+
+  private eventActions() {
+    this.socketSubscriptions.add(this.socketServices.getAction().subscribe((actionEvent: ActionEvent) => {
+      switch (actionEvent.action.type) {
+        case ActionType.RevealCards: {
+          this.hidden = actionEvent.action.data;
+          break;
+        }
+        case ActionType.SelectOption: {
+          break;
+          // this.users.set(action.from, {selected: action.action});
+        }
+        default:
+          break;
+      }
+    }));
   }
 }
