@@ -1,6 +1,5 @@
 #jobsbar{
-  width: 15rem;
-  max-width: 20rem;
+  width: 100%;
 }
 
 #jobsbar ul{
@@ -21,6 +20,10 @@
   margin: 0;
   padding: 0;
   visibility: hidden;
+}
+
+.card.rounded{
+  border-radius: 1rem !important;
 }
 
 
