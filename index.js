@@ -16,22 +16,18 @@ io.on('connection', socket => {
 
     console.log(`connected ${socket.id}`);
 
+    let currentRoomId;
     socket.on('disconnect', () => {
-        console.log(`disconnect ${socket.id}`);
+        console.log(`disconnect ${socket.id} - ${currentRoomId}`);
+        socket.in(currentRoomId).emit('leaveRoom', {socketId: socket.id});
     });
 
     function getRoomUsers(roomId, fn) {
         fn(io.sockets.adapter.rooms.get(roomId));
     }
 
-    socket.on('leaveRoom', (data) => {
-        console.log("leave room", data);
-        socket.in(data.roomId).emit('leaveRoom', {socketId: socket.id});
-
-        socket.leave(data.roomId);
-    });
-
     socket.on('joinRoom', (data) => {
+        currentRoomId = data.roomId;
         console.log("join room", data);
         socket.to(data.roomId).emit('newClient', {socketId: socket.id});
 

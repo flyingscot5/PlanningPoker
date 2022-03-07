@@ -38,11 +38,6 @@ export class SocketServices {
     );
   }
 
-  public sendLeaveRoom(roomId: any): void {
-    console.log(`Leaving room: ${roomId}`);
-    this.socket.emit('leaveRoom', {roomId});
-  }
-
   public getLeaveRoom(): any {
     return this.socket.fromEvent('leaveRoom').pipe(
       map(data => {

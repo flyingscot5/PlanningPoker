@@ -34,8 +34,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload')
   public ngOnDestroy(): void {
-    this.socketServices.sendLeaveRoom(this.roomId);
-
     this.socketSubscriptions.unsubscribe();
   }
 
@@ -45,6 +43,16 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     });
 
     this.socketServices.sendJoinRoom(this.roomId);
+
+    this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
+      // this.users.set(data.socketId, {nickname: "nickname"});
+    }));
+
+    this.socketSubscriptions.add(this.socketServices.getLeaveRoom().subscribe((data: any) => {
+      if (this.users.has(data.socketId)) {
+        this.users.delete(data.socketId);
+      }
+    }));
 
     this.socketSubscriptions.add(this.socketServices.getNewClient().subscribe((data: any) => {
       this.users.set(data.socketId, {nickname: "nickname"});
