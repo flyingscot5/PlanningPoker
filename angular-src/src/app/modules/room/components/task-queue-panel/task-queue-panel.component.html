@@ -4,33 +4,10 @@
   </div>
   <div>
     <ul id="activeitem">
-      <li>
-        <div class="card rounded">
-          <div class="card-body">
-            <h5 class="card-title">
-              job title 1
-            </h5>
-            <hr style="width: 100%;">
-            <p class="card-text">
-              job info 1
-            </p>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="card rounded">
-          <div class="card-body">
-            <h5 class="card-title">
-              job title 2
-            </h5>
-            <hr style="width: 100%;">
-            <p class="card-text">
-              job info 2
-            </p>
-          </div>
-        </div>
+      <li *ngFor="let task of taskCards">
+        <app-task-card [Title]="task.title" [Description]="task.description"></app-task-card>
       </li>
     </ul>
   </div>
 </div>
-<button (click)="toggleNavbar()">LOLOLOL</button>
+<!--<button (click)="toggleNavbar()">LOLOLOL</button>-->
