@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {map} from 'rxjs/operators';
-import {DataEvent} from "./types/data-event";
+import {ActionEvent} from "./types/action-event";
 
 @Injectable({
   providedIn: 'root'
@@ -51,16 +51,16 @@ export class SocketServices {
     );
   }
 
-  public sendData(data: DataEvent): void {
-    console.log('sending Data', {data});
-    this.socket.emit('data', {roomId: this.roomId, data});
+  public sendAction(action: ActionEvent): void {
+    console.log('sending Action', {action: action});
+    this.socket.emit('action', {roomId: this.roomId, action: action});
   }
 
-  public getData(): any {
-    return this.socket.fromEvent('data').pipe(
-      map(data => {
-        console.log('received Data', data);
-        return data;
+  public getAction(): any {
+    return this.socket.fromEvent('action').pipe(
+      map(action => {
+        console.log('received Action', action);
+        return action;
       })
     );
   }

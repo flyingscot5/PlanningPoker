@@ -3,7 +3,7 @@ import {SocketServices} from "../../../shared/services/socket.services";
 import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
 import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
-import {DataAction} from "../../../shared/services/types/data-action";
+import {ActionType} from "../../../shared/services/types/action-type";
 
 @Component({
   selector: 'app-room-page',
@@ -49,13 +49,13 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       this.users.set(data.socketId, {nickname: "nickname"});
     }));
 
-    this.socketSubscriptions.add(this.socketServices.getData().subscribe((data: any) => {
-      this.users.set(data.from, {selected: data.data});
+    this.socketSubscriptions.add(this.socketServices.getAction().subscribe((action: any) => {
+      this.users.set(action.from, {selected: action.action});
     }));
   }
 
   public submitOption(cardOption: string) {
-    this.socketServices.sendData({action: DataAction.SelectOption, data: cardOption});
+    this.socketServices.sendAction({action: ActionType.SelectOption, data: cardOption});
   }
 
   public toggleTaskPanel(){
@@ -64,6 +64,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public revealCards() {
     this.hidden = !this.hidden;
-    this.socketServices.sendData({action: DataAction.RevealCards, data: this.hidden});
+    this.socketServices.sendAction({action: ActionType.RevealCards, data: this.hidden});
   }
 }

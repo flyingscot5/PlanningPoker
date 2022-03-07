@@ -42,10 +42,10 @@ io.on('connection', socket => {
         socket.join(data.roomId);
     });
 
-    socket.on('data', (data) => {
-        console.log("send data", data);
-        data.from = socket.id;
-        socket.to(data.roomId).emit('data', data);
+    socket.on('action', (action) => {
+        console.log("send action", action);
+        action.from = socket.id;
+        socket.to(action.roomId).emit('data', action);
     });
 });
 
