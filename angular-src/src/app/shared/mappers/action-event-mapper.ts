@@ -9,7 +9,7 @@ export class ActionEventMapper {
     };
   }
 
-  public static mapAction(action: any): Action {
+  private static mapAction(action: any): Action {
     return {
       type: action.type,
       data: action.data
