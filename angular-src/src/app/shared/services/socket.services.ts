@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {map} from 'rxjs/operators';
 import {ActionEvent} from "./types/action-event";
+import {ActionEventMapper} from "../mappers/action-event-mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class SocketServices {
     return this.socket.fromEvent('action').pipe(
       map(action => {
         console.log('received Action', action);
-        return action;
+        return ActionEventMapper.mapAction(action);
       })
     );
   }
