@@ -3,6 +3,7 @@ import {SocketServices} from "../../../shared/services/socket.services";
 import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
 import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
+import {DataAction} from "../../../shared/services/types/data-action";
 
 @Component({
   selector: 'app-room-page',
@@ -54,7 +55,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   }
 
   public submitOption(cardOption: string) {
-    this.socketServices.sendData(cardOption);
+    this.socketServices.sendData({action: DataAction.SelectOption, data: cardOption});
   }
 
   public toggleTaskPanel(){
@@ -63,5 +64,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public revealCards() {
     this.hidden = !this.hidden;
+    this.socketServices.sendData({action: DataAction.RevealCards, data: this.hidden});
   }
 }

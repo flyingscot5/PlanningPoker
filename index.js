@@ -45,7 +45,7 @@ io.on('connection', socket => {
     socket.on('data', (data) => {
         console.log("send data", data);
         data.from = socket.id;
-        socket.to(data.roomId).emit('data', {data: data});
+        socket.to(data.roomId).emit('data', data);
     });
 });
 

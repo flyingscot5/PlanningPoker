@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {map} from 'rxjs/operators';
+import {DataEvent} from "./types/data-event";
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class SocketServices {
     );
   }
 
-  public sendData(data: any): void {
+  public sendData(data: DataEvent): void {
     console.log('sending Data', {data});
     this.socket.emit('data', {roomId: this.roomId, data});
   }
