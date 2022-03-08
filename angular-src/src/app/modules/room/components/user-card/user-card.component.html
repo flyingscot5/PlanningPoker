@@ -1,5 +1,5 @@
-<div class="d-flex flex-column">
-  <div class="option-card card" [ngClass]="{'hidden': Hidden, 'visible': !Hidden}">
+<div class="d-flex flex-column mx-3">
+  <div class="option-card card" [ngClass]="{'hidden': Hidden && User.selected, 'visible': !Hidden && User.selected, 'blank': !User.selected}">
     <div class="card-body">
       <p class="card-text" *ngIf="!Hidden">{{User.selected}}</p>
     </div>
