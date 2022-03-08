@@ -12,6 +12,8 @@ const io = require('socket.io')(server, {
     }
 });
 
+let roomData = new Map();
+
 io.on('connection', socket => {
 
     console.log(`connected ${socket.id}`);
@@ -32,10 +34,14 @@ io.on('connection', socket => {
         socket.to(joinRoomEvent.roomId).emit('joinRoom', {socketId: socket.id, username: joinRoomEvent.data.username});
 
         getRoomUsers(joinRoomEvent.roomId, function (clients) {
-            if (clients)
-                socket.emit('getRoomData', {clients: Array.from(clients)});
+            if (clients) {
+                socket.emit('getRoomData',
+                    getRoomData(joinRoomEvent.roomId, clients)
+                );
+            }
         });
 
+        joinRoom(joinRoomEvent.roomId, socket.id, joinRoomEvent);
         socket.join(joinRoomEvent.roomId);
     });
 
@@ -43,6 +49,43 @@ io.on('connection', socket => {
         console.log("send actionEvent", actionEvent);
         actionEvent.from = socket.id;
         socket.to(actionEvent.roomId).emit('action', actionEvent);
+        actionEvents(actionEvent, socket.id);
     });
 });
 
+function joinRoom(roomId, socketId, joinRoomEvent) {
+    if (!roomData.has(roomId))
+        roomData.set(roomId, new Map());
+
+    let currentRoomData = roomData.get(roomId);
+
+    if (!currentRoomData.has(socketId)) {
+        currentRoomData.set(socketId, {username: joinRoomEvent.data.username})
+    }
+}
+
+function actionEvents(actionEvent, socketId) {
+    let currentRoomData = roomData.get(actionEvent.roomId);
+    let currentUser = currentRoomData.get(socketId);
+    switch (actionEvent.action.type) {
+        case 2: {
+            currentUser.selected = actionEvent.action.data.selected;
+        }
+    }
+}
+
+function getRoomData(roomId, clients) {
+    let currentRoomData = roomData.get(roomId);
+    let clientIds = Array.from(clients);
+
+    return {
+        clients: clientIds.map((clientId) => {
+            let currentUser = currentRoomData.get(clientId);
+            return {
+                socketId: clientId,
+                username: currentUser.username,
+                selected: currentUser.selected
+            }
+        })
+    };
+}

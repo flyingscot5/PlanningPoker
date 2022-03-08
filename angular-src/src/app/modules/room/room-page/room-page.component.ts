@@ -43,6 +43,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     });
 
     this.socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
+    this.users.set("self", {username: "self"});
 
     this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
@@ -55,8 +56,8 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     }));
 
     this.socketSubscriptions.add(this.socketServices.getRoomData().subscribe((data: any) => {
-      data.clients.forEach((socketId: any) => {
-        this.users.set(socketId, {username: "nickname", selected: "XXL"});
+      data.clients.forEach((client: any) => {
+        this.users.set(client.socketId, {username: client.username, selected: client.selected});
       });
     }));
 
@@ -69,6 +70,9 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public submitOption(cardOption: string) {
     this.socketServices.sendAction({type: ActionType.SelectOption, data: {selected :cardOption}});
+    let userData = this.users.get("self");
+    userData.selected = cardOption;
+    this.users.set("self", userData);
   }
 
   public toggleTaskPanel() {
@@ -90,7 +94,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
         case ActionType.SelectOption: {
           let userData = this.users.get(actionEvent.from);
           userData.selected = actionEvent.action.data.selected;
-          this.users.set(actionEvent.from, userData);
           break;
         }
         default:
