@@ -29,10 +29,11 @@ io.on('connection', socket => {
     socket.on('joinRoom', (data) => {
         currentRoomId = data.roomId;
         console.log("join room", data);
-        socket.to(data.roomId).emit('newClient', {socketId: socket.id});
+        socket.to(data.roomId).emit('joinRoom', {socketId: socket.id});
 
         getRoomUsers(data.roomId, function (clients) {
-            socket.emit('joinRoom', {clients: clients});
+            if (clients)
+                socket.emit('getRoomData', {clients: Array.from(clients)});
         });
 
         socket.join(data.roomId);

@@ -14,10 +14,10 @@ export class SocketServices {
   public constructor(private socket: Socket) {
   }
 
-  public getNewClient(): any {
-    return this.socket.fromEvent('newClient').pipe(
+  public getRoomData(): any {
+    return this.socket.fromEvent('getRoomData').pipe(
       map(data => {
-        console.log('received newClient', data);
+        console.log('received room data', data);
         return data;
       })
     );

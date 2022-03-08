@@ -45,7 +45,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     this.socketServices.sendJoinRoom(this.roomId);
 
     this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
-      // this.users.set(data.socketId, {nickname: "nickname"});
+      this.users.set(data.socketId, {nickname: "nickname"});
     }));
 
     this.socketSubscriptions.add(this.socketServices.getLeaveRoom().subscribe((data: any) => {
@@ -54,8 +54,10 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       }
     }));
 
-    this.socketSubscriptions.add(this.socketServices.getNewClient().subscribe((data: any) => {
-      this.users.set(data.socketId, {nickname: "nickname"});
+    this.socketSubscriptions.add(this.socketServices.getRoomData().subscribe((data: any) => {
+      data.clients.forEach((socketId: any) => {
+        this.users.set(socketId, "nickname");
+      });
     }));
 
     this.eventActions();

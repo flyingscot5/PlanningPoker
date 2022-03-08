@@ -5,7 +5,6 @@ export interface Action {
   data: any;
 }
 
-
 export interface ActionEvent {
   roomId: string;
   from: string;
