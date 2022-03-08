@@ -7,9 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TaskCardComponent implements OnInit {
   @Input()
-  public Title: any;
-  @Input()
-  public Description: any;
+  public Task: any;
   ngOnInit(): void {
   }
 

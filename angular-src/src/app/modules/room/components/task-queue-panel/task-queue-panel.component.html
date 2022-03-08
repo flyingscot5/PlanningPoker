@@ -5,7 +5,7 @@
   <div>
     <ul id="activeitem">
       <li *ngFor="let task of taskCards">
-        <app-task-card [Title]="task.title" [Description]="task.description"></app-task-card>
+        <app-task-card [Task]="task"></app-task-card>
       </li>
     </ul>
   </div>
