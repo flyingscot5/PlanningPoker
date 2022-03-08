@@ -26,23 +26,23 @@ io.on('connection', socket => {
         fn(io.sockets.adapter.rooms.get(roomId));
     }
 
-    socket.on('joinRoom', (data) => {
-        currentRoomId = data.roomId;
-        console.log("join room", data);
-        socket.to(data.roomId).emit('joinRoom', {socketId: socket.id});
+    socket.on('joinRoom', (joinRoomEvent) => {
+        currentRoomId = joinRoomEvent.roomId;
+        console.log("join room", joinRoomEvent);
+        socket.to(joinRoomEvent.roomId).emit('joinRoom', {socketId: socket.id, username: joinRoomEvent.data.username});
 
-        getRoomUsers(data.roomId, function (clients) {
+        getRoomUsers(joinRoomEvent.roomId, function (clients) {
             if (clients)
                 socket.emit('getRoomData', {clients: Array.from(clients)});
         });
 
-        socket.join(data.roomId);
+        socket.join(joinRoomEvent.roomId);
     });
 
-    socket.on('action', (action) => {
-        console.log("send action", action);
-        action.from = socket.id;
-        socket.to(action.roomId).emit('action', action);
+    socket.on('action', (actionEvent) => {
+        console.log("send actionEvent", actionEvent);
+        actionEvent.from = socket.id;
+        socket.to(actionEvent.roomId).emit('action', actionEvent);
     });
 });
 

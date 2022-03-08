@@ -20,7 +20,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
-  public user = {nickname: "nickname", selected: "XXL"}
+  public user = {username: "nickname", selected: "XXL"}
 
   public hidden: boolean = true;
 
@@ -42,10 +42,10 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       this.roomId = params.get('RoomId');
     });
 
-    this.socketServices.sendJoinRoom(this.roomId);
+    this.socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
 
     this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
-      this.users.set(data.socketId, {nickname: "nickname"});
+      this.users.set(data.socketId, {username: data.username, selected: "XXL"});
     }));
 
     this.socketSubscriptions.add(this.socketServices.getLeaveRoom().subscribe((data: any) => {
@@ -56,15 +56,19 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this.socketSubscriptions.add(this.socketServices.getRoomData().subscribe((data: any) => {
       data.clients.forEach((socketId: any) => {
-        this.users.set(socketId, "nickname");
+        this.users.set(socketId, {username: "nickname", selected: "XXL"});
       });
     }));
 
     this.eventActions();
   }
 
+  public getUsers() {
+    return [...this.users.values()];
+  }
+
   public submitOption(cardOption: string) {
-    this.socketServices.sendAction({type: ActionType.SelectOption, data: cardOption});
+    this.socketServices.sendAction({type: ActionType.SelectOption, data: {selected :cardOption}});
   }
 
   public toggleTaskPanel() {
@@ -84,8 +88,10 @@ export class RoomPageComponent implements OnInit, OnDestroy {
           break;
         }
         case ActionType.SelectOption: {
+          let userData = this.users.get(actionEvent.from);
+          userData.selected = actionEvent.action.data.selected;
+          this.users.set(actionEvent.from, userData);
           break;
-          // this.users.set(action.from, {selected: action.action});
         }
         default:
           break;

@@ -23,10 +23,10 @@ export class SocketServices {
     );
   }
 
-  public sendJoinRoom(roomId: any): void {
+  public sendJoinRoom(roomId: any, data: any): void {
     console.log(`Joining room: ${roomId}`);
     this.roomId = roomId;
-    this.socket.emit('joinRoom', {roomId});
+    this.socket.emit('joinRoom', {roomId: this.roomId, data});
   }
 
   public getJoinRoom(): any {
