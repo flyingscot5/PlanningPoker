@@ -4,8 +4,8 @@
   </div>
   <div>
     <ul id="activeitem">
-      <li *ngFor="let task of taskCards">
-        <app-task-card [Task]="task"></app-task-card>
+      <li *ngFor="let task of taskCards; let index=index;">
+        <app-task-card (removeTaskEvent)="removeTask($event)" [Task]="task" [Index]="index"></app-task-card>
       </li>
     </ul>
   </div>
