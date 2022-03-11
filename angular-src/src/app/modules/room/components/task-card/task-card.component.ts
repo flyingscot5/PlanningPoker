@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-task-card',
@@ -7,9 +7,15 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TaskCardComponent implements OnInit {
 
+  @Output() removeTaskEvent: EventEmitter<any> = new EventEmitter();
   @Input() public Task: any;
+  @Input() public Index: any;
 
   ngOnInit(): void {
+  }
+
+  public removeTask() {
+    this.removeTaskEvent.emit(this.Index);
   }
 
 }

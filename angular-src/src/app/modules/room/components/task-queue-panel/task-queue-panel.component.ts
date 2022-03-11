@@ -12,7 +12,6 @@ export class TaskQueuePanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.taskCards);
   }
 
   public toggleNavbar() {
@@ -21,5 +20,9 @@ export class TaskQueuePanelComponent implements OnInit {
 
   public addTask(task: any) {
     this.taskCards.push(task);
+  }
+
+  public removeTask(taskIndex: any) {
+    this.taskCards.splice(taskIndex, 1);
   }
 }
