@@ -6,6 +6,7 @@ import {TaskQueuePanelComponent} from './components/task-queue-panel/task-queue-
 import {UserCardComponent} from './components/user-card/user-card.component';
 import { TaskCardComponent } from './components/task-card/task-card.component';
 import { AddTaskModalComponent } from './components/add-task-modal/add-task-modal.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { AddTaskModalComponent } from './components/add-task-modal/add-task-moda
     RoomPageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class RoomModule { }

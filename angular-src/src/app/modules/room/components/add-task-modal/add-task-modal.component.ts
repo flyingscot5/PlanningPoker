@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'add-task-modal',
@@ -9,12 +10,19 @@ export class AddTaskModalComponent implements OnInit {
 
   @Output() addTaskEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  public taskForm: FormGroup;
+
+  constructor() {
+    this.taskForm = new FormGroup({
+      title: new FormControl(),
+      description: new FormControl()
+    });
+  }
 
   ngOnInit(): void {
   }
 
   public addTask() {
-     this.addTaskEvent.emit({title: 'job 3 title', description: 'job 3 description'});
+    this.addTaskEvent.emit(this.taskForm.getRawValue());
   }
 }
