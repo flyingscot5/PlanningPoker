@@ -19,7 +19,7 @@ export class TaskQueuePanelComponent implements OnInit {
     this.navbarOpen = !this.navbarOpen;
   }
 
-  public addTask() {
-    this.taskCards.push({title: 'job 3 title', description: 'job 3 description'},);
+  public addTask(task: any) {
+    this.taskCards.push(task);
   }
 }
