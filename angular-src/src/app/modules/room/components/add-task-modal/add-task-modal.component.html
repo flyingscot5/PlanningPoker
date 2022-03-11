@@ -1,0 +1,27 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">Add Task</button>
+
+<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="task-title" class="col-form-label float-start">Title:</label>
+            <input type="text" class="form-control" id="task-title">
+          </div>
+          <div class="mb-3">
+            <label for="task-description" class="col-form-label float-start">Description:</label>
+            <textarea class="form-control" id="task-description"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Add Task</button>
+      </div>
+    </div>
+  </div>
+</div>

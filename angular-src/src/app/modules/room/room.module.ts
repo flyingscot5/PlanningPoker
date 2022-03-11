@@ -5,6 +5,7 @@ import { CardComponent } from './components/card/card.component';
 import {TaskQueuePanelComponent} from './components/task-queue-panel/task-queue-panel.component';
 import {UserCardComponent} from './components/user-card/user-card.component';
 import { TaskCardComponent } from './components/task-card/task-card.component';
+import { AddTaskModalComponent } from './components/add-task-modal/add-task-modal.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { TaskCardComponent } from './components/task-card/task-card.component';
     CardComponent,
     TaskQueuePanelComponent,
     UserCardComponent,
-    TaskCardComponent
+    TaskCardComponent,
+    AddTaskModalComponent
   ],
   exports: [
     RoomPageComponent
