@@ -20,6 +20,12 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
+  public upSide: any[] = [];
+  public downSide: any[] = [];
+  public leftSide: any[] = [];
+  public rightSide: any[] = [];
+  public sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
+
   public user = {username: "nickname", selected: "XXL"}
 
   public hidden: boolean = true;
@@ -47,28 +53,59 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
+      this.sortUsersToSides();
     }));
 
     this.socketSubscriptions.add(this.socketServices.getLeaveRoom().subscribe((data: any) => {
       if (this.users.has(data.socketId)) {
         this.users.delete(data.socketId);
       }
+      this.sortUsersToSides();
     }));
 
     this.socketSubscriptions.add(this.socketServices.getRoomData().subscribe((data: any) => {
       data.clients.forEach((client: any) => {
         this.users.set(client.socketId, {username: client.username, selected: client.selected});
       });
+      this.sortUsersToSides();
     }));
 
+    this.sortUsersToSides();
+    console.log(this.upSide);
+    console.log(this.downSide);
+
     this.eventActions();
+  }
+
+  public sortUsersToSides(){
+    this.upSide = [];
+    this.downSide = [];
+    this.leftSide = [];
+    this.rightSide = [];
+
+    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
+
+    this.getUsers().forEach((user) => {
+      this.getLowestCountSide(sides).push(user);
+    });
+
+  }
+
+  public getLowestCountSide(sides: any[]): any{
+    let firstLowestSide: any = this.upSide;
+    sides.forEach((side) => {
+      if (firstLowestSide.length > side.length){
+        firstLowestSide = side;
+      }
+    });
+    return firstLowestSide;
   }
 
   public getUsers() {
     return [...this.users.values()];
   }
 
-  public submitOption(cardOption: string) {
+  public submitOption(cardOption: string){
     this.socketServices.sendAction({type: ActionType.SelectOption, data: {selected :cardOption}});
     let userData = this.users.get("self");
     userData.selected = cardOption;
