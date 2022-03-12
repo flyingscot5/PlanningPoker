@@ -32,10 +32,10 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public socketSubscriptions = new Subscriber();
 
-  private socketServices: SocketServices;
+  private _socketServices: SocketServices;
 
   constructor(private route: ActivatedRoute, socketServices: SocketServices) {
-    this.socketServices = socketServices;
+    this._socketServices = socketServices;
   }
 
   @HostListener('window:beforeunload')
@@ -48,22 +48,22 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       this.roomId = params.get('RoomId');
     });
 
-    this.socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
+    this._socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
     this.users.set("self", {username: "self"});
 
-    this.socketSubscriptions.add(this.socketServices.getJoinRoom().subscribe((data: any) => {
+    this.socketSubscriptions.add(this._socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
       this.sortUsersToSides();
     }));
 
-    this.socketSubscriptions.add(this.socketServices.getLeaveRoom().subscribe((data: any) => {
+    this.socketSubscriptions.add(this._socketServices.getLeaveRoom().subscribe((data: any) => {
       if (this.users.has(data.socketId)) {
         this.users.delete(data.socketId);
       }
       this.sortUsersToSides();
     }));
 
-    this.socketSubscriptions.add(this.socketServices.getRoomData().subscribe((data: any) => {
+    this.socketSubscriptions.add(this._socketServices.getRoomData().subscribe((data: any) => {
       data.clients.forEach((client: any) => {
         this.users.set(client.socketId, {username: client.username, selected: client.selected});
       });
@@ -106,7 +106,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   }
 
   public submitOption(cardOption: string){
-    this.socketServices.sendAction({type: ActionType.SelectOption, data: {selected :cardOption}});
+    this._socketServices.sendAction({type: ActionType.SelectOption, data: {selected :cardOption}});
     let userData = this.users.get("self");
     userData.selected = cardOption;
     this.users.set("self", userData);
@@ -118,11 +118,11 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public revealCards() {
     this.hidden = !this.hidden;
-    this.socketServices.sendAction({type: ActionType.RevealCards, data: this.hidden});
+    this._socketServices.sendAction({type: ActionType.RevealCards, data: this.hidden});
   }
 
   private eventActions() {
-    this.socketSubscriptions.add(this.socketServices.getAction().subscribe((actionEvent: ActionEvent) => {
+    this.socketSubscriptions.add(this._socketServices.getAction().subscribe((actionEvent: ActionEvent) => {
       switch (actionEvent.action.type) {
         case ActionType.RevealCards: {
           this.hidden = actionEvent.action.data;
@@ -131,6 +131,12 @@ export class RoomPageComponent implements OnInit, OnDestroy {
         case ActionType.SelectOption: {
           let userData = this.users.get(actionEvent.from);
           userData.selected = actionEvent.action.data.selected;
+          break;
+        }
+        case ActionType.AddTask: {
+          break;
+        }
+        case ActionType.RemoveTask: {
           break;
         }
         default:
