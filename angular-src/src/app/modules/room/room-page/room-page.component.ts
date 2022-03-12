@@ -26,6 +26,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
   public rightSide: any[] = [];
   public sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
 
+
   public user = {username: "nickname", selected: "XXL"}
 
   public hidden: boolean = true;
@@ -53,14 +54,14 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this.socketSubscriptions.add(this._socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
-      this.sortUsersToSides();
+      this.addUserToTable({id: data.socketId, user: {username: data.username}});
     }));
 
     this.socketSubscriptions.add(this._socketServices.getLeaveRoom().subscribe((data: any) => {
       if (this.users.has(data.socketId)) {
         this.users.delete(data.socketId);
+        this.removeUserFromTable(data.socketId);
       }
-      this.sortUsersToSides();
     }));
 
     this.socketSubscriptions.add(this._socketServices.getRoomData().subscribe((data: any) => {
@@ -76,7 +77,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this.eventActions();
   }
-
+  // todo: Convert each side to have a map of users instead of an array and it'll be so much easier
   public sortUsersToSides(){
     this.upSide = [];
     this.downSide = [];
@@ -85,10 +86,23 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
 
-    this.getUsers().forEach((user) => {
-      this.getLowestCountSide(sides).push(user);
+    this.users.forEach((user, id) => {
+      this.getLowestCountSide(sides).push({id, user});
     });
-
+  }
+  public addUserToTable(user: any){
+    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
+    this.getLowestCountSide(sides).push(user);
+  }
+  public removeUserFromTable(socketId: string){
+    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
+    sides.forEach((side) => {
+      side.forEach((user: any) => {
+        if (user.id === socketId){
+          side.pop(user);
+        }
+      });
+    });
   }
 
   public getLowestCountSide(sides: any[]): any{
@@ -100,6 +114,8 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     });
     return firstLowestSide;
   }
+
+
 
   public getUsers() {
     return [...this.users.values()];
