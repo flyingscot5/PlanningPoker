@@ -5,6 +5,8 @@ import {Subscriber} from "rxjs";
 import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
 import {ActionType} from "../../../shared/services/types/action-type";
 import {ActionEvent} from "../../../shared/services/types/action-event";
+import {IUser, TableSide, User} from "../../../shared/types/user";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-room-page',
@@ -22,23 +24,20 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     description: 'job 2 description'
   }];
 
+  public newUsers = new Map<string, IUser>();
+
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
-  public upSide: any[] = [];
-  public downSide: any[] = [];
-  public leftSide: any[] = [];
-  public rightSide: any[] = [];
-  public sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
-
-
-  public user = {username: "nickname", selected: "XXL"}
+  public user = {username: "nickname", selected: "XXL"};
 
   public hidden: boolean = true;
 
   public socketSubscriptions = new Subscriber();
 
   private _socketServices: SocketServices;
+
+  public TableSide = TableSide;
 
   constructor(private route: ActivatedRoute, socketServices: SocketServices) {
     this._socketServices = socketServices;
@@ -55,71 +54,75 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this._socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
     this.users.set("self", {username: "self"});
+    this.newUsers.set('self', new User('self', 'self', this.getLowestCountSide()));
 
     this.socketSubscriptions.add(this._socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
-      this.addUserToTable({id: data.socketId, user: {username: data.username}});
+      this.newUsers.set(data.socketId, new User(data.socketId, data.username, this.getLowestCountSide()));
     }));
 
     this.socketSubscriptions.add(this._socketServices.getLeaveRoom().subscribe((data: any) => {
       if (this.users.has(data.socketId)) {
         this.users.delete(data.socketId);
-        this.removeUserFromTable(data.socketId);
+      }
+      if (this.newUsers.has(data.socketId)) {
+        this.newUsers.delete(data.socketId);
       }
     }));
 
     this.socketSubscriptions.add(this._socketServices.getRoomData().subscribe((data: any) => {
       data.clients.forEach((client: any) => {
         this.users.set(client.socketId, {username: client.username, selected: client.selected});
+        const newUser: User = new User(client.socketId, client.username, this.getLowestCountSide());
+        newUser.selected = client.selected;
+        this.newUsers.set(client.socketId, new User(client.socketId, client.username, this.getLowestCountSide()));
       });
-      this.sortUsersToSides();
     }));
-
-    this.sortUsersToSides();
-    console.log(this.upSide);
-    console.log(this.downSide);
 
     this.eventActions();
   }
-  // todo: Convert each side to have a map of users instead of an array and it'll be so much easier
-  public sortUsersToSides(){
-    this.upSide = [];
-    this.downSide = [];
-    this.leftSide = [];
-    this.rightSide = [];
 
-    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
-
-    this.users.forEach((user, id) => {
-      this.getLowestCountSide(sides).push({id, user});
+  public getUsersBySide(side: TableSide): IUser[]{
+    let users:IUser[] = [] as IUser[];
+    this.newUsers.forEach(user => {
+      if (user.side === side){
+        users.push(user);
+      }
     });
-  }
-  public addUserToTable(user: any){
-    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
-    this.getLowestCountSide(sides).push(user);
-  }
-  public removeUserFromTable(socketId: string){
-    let sides: any[] = [this.upSide, this.downSide, this.leftSide, this.rightSide];
-    sides.forEach((side) => {
-      side.forEach((user: any) => {
-        if (user.id === socketId){
-          side.pop(user);
-        }
-      });
-    });
+    return users;
   }
 
-  public getLowestCountSide(sides: any[]): any{
-    let firstLowestSide: any = this.upSide;
+  public getLowestCountSide(): TableSide{
+    const upCount = {side: TableSide.Up, amount: 0};
+    const downCount = {side: TableSide.Down, amount: 0};
+    const leftCount = {side: TableSide.Left, amount: 0};
+    const rightCount = {side: TableSide.Right, amount: 0};
+    this.newUsers.forEach((user) => {
+      switch (user.side){
+        case TableSide.Up:
+          upCount.amount++;
+          break;
+        case TableSide.Down:
+          downCount.amount++;
+          break;
+        case TableSide.Left:
+          leftCount.amount++;
+          break;
+        case TableSide.Right:
+          rightCount.amount++;
+          break;
+      }
+    });
+
+    let firstLowestSide = upCount;
+    const sides = [upCount, downCount, leftCount, rightCount];
     sides.forEach((side) => {
-      if (firstLowestSide.length > side.length){
+      if (firstLowestSide.amount > side.amount){
         firstLowestSide = side;
       }
     });
-    return firstLowestSide;
+    return firstLowestSide.side;
   }
-
-
 
   public getUsers() {
     return [...this.users.values()];
