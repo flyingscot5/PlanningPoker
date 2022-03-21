@@ -17,6 +17,11 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public roomId: string | null = "";
 
+  public taskCards: any[] = [{title: 'job 1 title', description: 'job 1 description'}, {
+    title: 'job 2 title',
+    description: 'job 2 description'
+  }];
+
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
 
@@ -150,14 +155,24 @@ export class RoomPageComponent implements OnInit, OnDestroy {
           break;
         }
         case ActionType.AddTask: {
+          this.taskCards.push(actionEvent.action.data.task);
           break;
         }
         case ActionType.RemoveTask: {
+          this.taskCards.splice(actionEvent.action.data.taskIndex, 1);
           break;
         }
-        default:
-          break;
       }
     }));
+  }
+
+  public addTask(task: any) {
+    this.taskCards.push(task);
+    this._socketServices.sendAction({type: ActionType.AddTask, data: {task: task}});
+  }
+
+  public removeTask(taskIndex: any) {
+    this.taskCards.splice(taskIndex, 1);
+    this._socketServices.sendAction({type: ActionType.RemoveTask, data: {taskIndex: taskIndex}});
   }
 }

@@ -13,8 +13,8 @@
       <div class="d-flex flex-row h-100">
         <div class="poker-table-container">
           <div class="poker-table-top">
-<!--            <user-card *ngFor="let useri of getUsers()" [User]="useri" [Hidden]="hidden"></user-card>-->
-                <user-card *ngFor="let useri of upSide" [User]="useri.user" [Hidden]="hidden"></user-card>
+            <!--            <user-card *ngFor="let useri of getUsers()" [User]="useri" [Hidden]="hidden"></user-card>-->
+            <user-card *ngFor="let useri of upSide" [User]="useri.user" [Hidden]="hidden"></user-card>
           </div>
           <div class="poker-table-left">
             <user-card *ngFor="let useri of leftSide" [User]="useri.user" [Hidden]="hidden"></user-card>
@@ -41,6 +41,7 @@
     </div>
   </div>
   <div id="jobsbarwrapper" class="d-flex flex-column" style="background: #f9f9f9; max-width: 30rem; width: 25rem">
-    <app-task-queue-panel></app-task-queue-panel>
+    <app-task-queue-panel [TaskCards]="taskCards" (addTaskCardEvent)="addTask($event)"
+                          (removeTaskCardEvent)="removeTask($event)"></app-task-queue-panel>
   </div>
 </div>

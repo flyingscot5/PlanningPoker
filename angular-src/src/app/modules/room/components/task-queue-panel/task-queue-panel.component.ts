@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskCardComponent} from '../task-card/task-card.component';
 import {ActionType} from "../../../../shared/services/types/action-type";
 import {SocketServices} from "../../../../shared/services/socket.services";
@@ -10,16 +10,13 @@ import {SocketServices} from "../../../../shared/services/socket.services";
 })
 export class TaskQueuePanelComponent implements OnInit {
 
+  @Output() addTaskCardEvent: EventEmitter<any> = new EventEmitter();
+  @Output() removeTaskCardEvent: EventEmitter<any> = new EventEmitter();
+  @Input() public TaskCards: any;
+
   public navbarOpen = false;
-  public taskCards: any[] = [{title: 'job 1 title', description: 'job 1 description'}, {
-    title: 'job 2 title',
-    description: 'job 2 description'
-  }];
 
-  private _socketServices: SocketServices;
-
-  constructor(socketServices: SocketServices) {
-    this._socketServices = socketServices;
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -30,12 +27,10 @@ export class TaskQueuePanelComponent implements OnInit {
   }
 
   public addTask(task: any) {
-    this.taskCards.push(task);
-    this._socketServices.sendAction({type: ActionType.AddTask, data: {task: task}});
+    this.addTaskCardEvent.emit(task);
   }
 
   public removeTask(taskIndex: any) {
-    this.taskCards.splice(taskIndex, 1);
-    this._socketServices.sendAction({type: ActionType.RemoveTask, data: {taskIndex: taskIndex}});
+    this.removeTaskCardEvent.emit(taskIndex);
   }
 }
