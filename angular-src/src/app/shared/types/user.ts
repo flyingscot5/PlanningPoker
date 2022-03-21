@@ -10,9 +10,10 @@ export class User implements IUser{
   public username: string;
   public side: TableSide = TableSide.Unknown;
   public selected: any;
-  constructor(id: string, username: string) {
+  constructor(id: string, username: string, side: TableSide ) {
     this.id = id;
     this.username = username;
+    this.side = side;
   }
 }
 

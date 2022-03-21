@@ -55,18 +55,16 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
     this._socketServices.sendJoinRoom(this.roomId, {username: "nickname"});
     this.users.set("self", {username: "self"});
-    this.newUsers.set('self', new User('self', 'self'));
+    this.newUsers.set('self', new User('self', 'self', this.getLowestCountSide()));
 
     this.socketSubscriptions.add(this._socketServices.getJoinRoom().subscribe((data: any) => {
       this.users.set(data.socketId, {username: data.username});
-      this.newUsers.set('self', new User('self', 'self'));
-      // this.addUserToTable({id: data.socketId, user: {username: data.username}});
+      this.newUsers.set(data.socketId, new User(data.socketId, data.username, this.getLowestCountSide()));
     }));
 
     this.socketSubscriptions.add(this._socketServices.getLeaveRoom().subscribe((data: any) => {
       if (this.users.has(data.socketId)) {
         this.users.delete(data.socketId);
-        // this.removeUserFromTable(data.socketId);
       }
       if (this.newUsers.has(data.socketId)) {
         this.newUsers.delete(data.socketId);
@@ -76,20 +74,18 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     this.socketSubscriptions.add(this._socketServices.getRoomData().subscribe((data: any) => {
       data.clients.forEach((client: any) => {
         this.users.set(client.socketId, {username: client.username, selected: client.selected});
-        const newUser: User = new User(client.socketId, client.username);
+        const newUser: User = new User(client.socketId, client.username, this.getLowestCountSide());
         newUser.selected = client.selected;
-        this.newUsers.set(client.socketId, newUser);
+        this.newUsers.set(client.socketId, new User(client.socketId, client.username, this.getLowestCountSide()));
       });
-      // this.sortUsersToSides();
     }));
 
-    // this.sortUsersToSides();
     this.eventActions();
   }
 
   public getUsersBySide(side: TableSide): IUser[]{
     let users:IUser[] = [] as IUser[];
-    let user = this.newUsers.forEach(user => {
+    this.newUsers.forEach(user => {
       if (user.side === side){
         users.push(user);
       }
@@ -97,11 +93,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     return users;
   }
 
-  public sortUsersToSides(){
-    this.newUsers.forEach((user) => {
-      user.side = this.getLowestCountSide();
-    });
-  }
   public getLowestCountSide(): TableSide{
     const upCount = {side: TableSide.Up, amount: 0};
     const downCount = {side: TableSide.Down, amount: 0};
@@ -131,14 +122,10 @@ export class RoomPageComponent implements OnInit, OnDestroy {
         firstLowestSide = side;
       }
     });
-
     return firstLowestSide.side;
   }
 
   public getUsers() {
-    return [...this.users.values()];
-  }
-  public getNewUsers(){
     return [...this.users.values()];
   }
 
