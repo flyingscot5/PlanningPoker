@@ -44,7 +44,6 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     this._socketServices = socketServices;
   }
 
-  @HostListener('window:beforeunload')
   public ngOnDestroy(): void {
     this.socketSubscriptions.unsubscribe();
   }
