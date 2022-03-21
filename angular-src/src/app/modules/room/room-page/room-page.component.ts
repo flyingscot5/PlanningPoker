@@ -19,14 +19,12 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public roomId: string | null = "";
 
-<<<<<<< Updated upstream
   public taskCards: any[] = [{title: 'job 1 title', description: 'job 1 description'}, {
     title: 'job 2 title',
     description: 'job 2 description'
   }];
-=======
+
   public newUsers = new Map<string, IUser>();
->>>>>>> Stashed changes
 
   public cardOptions: Array<string> = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "?"];
   public users = new Map();
