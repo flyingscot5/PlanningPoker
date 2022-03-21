@@ -1,7 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TaskCardComponent} from '../task-card/task-card.component';
-import {ActionType} from "../../../../shared/services/types/action-type";
-import {SocketServices} from "../../../../shared/services/socket.services";
 
 @Component({
   selector: 'app-task-queue-panel',

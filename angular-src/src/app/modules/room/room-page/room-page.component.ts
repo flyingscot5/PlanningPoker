@@ -1,12 +1,11 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SocketServices} from "../../../shared/services/socket.services";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {SocketService} from "../../../shared/services/socket-service/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscriber} from "rxjs";
 import {TaskQueuePanelComponent} from '../components/task-queue-panel/task-queue-panel.component';
 import {ActionType} from "../../../shared/services/types/action-type";
 import {ActionEvent} from "../../../shared/services/types/action-event";
 import {IUser, TableSide, User} from "../../../shared/types/user";
-import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-room-page',
@@ -35,11 +34,11 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   public socketSubscriptions = new Subscriber();
 
-  private _socketServices: SocketServices;
+  private _socketServices: SocketService;
 
   public TableSide = TableSide;
 
-  constructor(private route: ActivatedRoute, socketServices: SocketServices) {
+  constructor(private route: ActivatedRoute, socketServices: SocketService) {
     this._socketServices = socketServices;
   }
 

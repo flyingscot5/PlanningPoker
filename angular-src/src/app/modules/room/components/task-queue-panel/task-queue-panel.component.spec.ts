@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TaskQueuePanelComponent } from './task-queue-panel.component';
+import {TaskQueuePanelComponent} from './task-queue-panel.component';
 
 describe('TaskQueuePanelComponent', () => {
   let component: TaskQueuePanelComponent;

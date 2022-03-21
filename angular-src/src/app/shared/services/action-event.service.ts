@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {ActionEvent} from "./types/action-event";
 import {ActionType} from "./types/action-type";
-import {SocketServices} from "./socket.services";
+import {SocketService} from "./socket-service/socket.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActionEventService {
-  private _socketServices: SocketServices;
+  private _socketServices: SocketService;
 
-  constructor(socketServices: SocketServices) {
+  constructor(socketServices: SocketService) {
     this._socketServices = socketServices;
   }
 

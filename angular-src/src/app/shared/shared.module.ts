@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
-import {SocketServices} from './services/socket.services';
 import {HeaderComponent} from "./components/header/header.component";
+import {AccountService} from "./services/account-service/account.service";
+import {SocketService} from "./services/socket-service/socket.service";
 
 const imports = [RouterModule];
 
@@ -11,7 +12,10 @@ const declarations = [HeaderComponent];
 @NgModule({
   imports: [...imports],
   declarations: [...declarations],
-  providers: [SocketServices],
+  providers: [
+    SocketService,
+    AccountService
+  ],
   exports: [
     ...imports,
     ...declarations

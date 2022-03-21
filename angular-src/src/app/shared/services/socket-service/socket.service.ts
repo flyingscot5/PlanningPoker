@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {map} from 'rxjs/operators';
-import {Action, ActionEvent} from "./types/action-event";
-import {ActionEventMapper} from "../mappers/action-event-mapper";
+import {Action} from "../types/action-event";
+import {ActionEventMapper} from "../../mappers/action-event-mapper";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class SocketServices {
+export class SocketService {
   private roomId: any;
 
   public constructor(private socket: Socket) {
