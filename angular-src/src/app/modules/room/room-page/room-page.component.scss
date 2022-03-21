@@ -1,4 +1,3 @@
-
 .poker-table-container {
   grid-gap: 0.8rem;
   display: inline-grid;
@@ -64,7 +63,10 @@
   background-color: #f9f9f9;
   justify-content: center;
   width: 100%;
-  //height: 20%;
+}
+
+.room-height-minus-nav{
+  height: calc(100vh - 56px);
 }
 
 
