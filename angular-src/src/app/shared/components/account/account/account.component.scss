@@ -1,0 +1,14 @@
+.profile-icon {
+  max-width: 45px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid #d2d2dc;
+  border-radius: 0
+}

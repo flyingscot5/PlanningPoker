@@ -4,11 +4,11 @@ import {RouterModule} from '@angular/router';
 import {HeaderComponent} from "./components/header/header.component";
 import {GuestAccountService} from "./services/account-service/guest-account.service";
 import {SocketService} from "./services/socket-service/socket.service";
-import {AccountComponent} from './components/account/account.component';
+import {AccountModule} from "./components/account/account.module";
 
-const imports = [RouterModule];
+const imports = [RouterModule, AccountModule];
 
-const declarations = [HeaderComponent, AccountComponent];
+const declarations = [HeaderComponent];
 
 @NgModule({
   imports: [...imports],

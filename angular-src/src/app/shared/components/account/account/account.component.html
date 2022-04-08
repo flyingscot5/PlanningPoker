@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="dropdown">
+    <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+      <img alt="profile image" class="rounded-circle m-0 profile-icon"
+           src="https://img.icons8.com/bubbles/100/000000/administrator-male.png">
+      {{user.username}}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end">
+    <account-profile [User]="user"></account-profile>
+    </div>
+  </div>
+</div>
+
+
