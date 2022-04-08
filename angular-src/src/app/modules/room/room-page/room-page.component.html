@@ -10,10 +10,10 @@
       <div class="d-flex flex-row h-100">
         <div class="poker-table-container">
           <div class="poker-table-top">
-            <user-card *ngFor="let useri of getUsersBySide(TableSide.Up)" [User]="useri" [Hidden]="hidden"></user-card>
+            <user-card *ngFor="let user of getUsersBySide(TableSide.Up)" [User]="user" [Hidden]="hidden"></user-card>
           </div>
           <div class="poker-table-left">
-            <user-card *ngFor="let useri of getUsersBySide(TableSide.Left)" [User]="useri" [Hidden]="hidden"></user-card>
+            <user-card *ngFor="let user of getUsersBySide(TableSide.Left)" [User]="user" [Hidden]="hidden"></user-card>
           </div>
 
           <div class="poker-table">
@@ -21,10 +21,10 @@
           </div>
 
           <div class="poker-table-right">
-            <user-card *ngFor="let useri of getUsersBySide(TableSide.Right)" [User]="useri" [Hidden]="hidden"></user-card>
+            <user-card *ngFor="let user of getUsersBySide(TableSide.Right)" [User]="user" [Hidden]="hidden"></user-card>
           </div>
           <div class="poker-table-bottom">
-            <user-card *ngFor="let useri of getUsersBySide(TableSide.Down)" [User]="useri" [Hidden]="hidden"></user-card>
+            <user-card *ngFor="let user of getUsersBySide(TableSide.Down)" [User]="user" [Hidden]="hidden"></user-card>
           </div>
         </div>
       </div>
